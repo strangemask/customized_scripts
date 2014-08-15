@@ -94,7 +94,7 @@ class Listing_Widget extends WP_Widget {
 				</p>
 
 				<p class="search_layer">
-					<label for="price">Price:</label>
+					<label for="lprice">Price:</label>
 					<select name="lprice" id="lprice" class="lprice">
 						<option value="">Select Price</option>
 						<option value="4-5">S4-$5</option>
