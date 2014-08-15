@@ -857,9 +857,7 @@ $type = escape_check($_GET['listing_type']);
 $location = escape_check($_GET['location']);
 $min_size = escape_check($_GET['min_size']);
 $max_size = escape_check($_GET['max_size']);
-$price = explode('-', escape_check($_GET['lprice']));
-$max_price = $price[1];
-$min_price = $price[0];
+$lprice = escape_check($_GET['lprice']);
 $title_keyword = escape_check(trim($_GET['listing_name']));
 
 //Fix homepage pagination
@@ -883,12 +881,13 @@ if ( get_query_var('paged') ) {
 	if ($location != '') {
 		$location_array = array('key' => 'listing_default_location','value' => $location);
 	}
-	if($max_price != '') {
-		$max_price_array = array('key' => 'listing_max_price','value' => $max_price,'compare' => '<=','type' => 'numeric');
-	}
-	if($min_price != '') {
+	/*if($min_price != '') {
 		$min_price_array = array('key' => 'listing_min_price','value' => $min_price,'compare' => '>=','type' => 'numeric');
-	}
+		$min_price_array = array('key' => 'listing_min_price','value' => array($min_price, $max_price),'compare' => 'BETWEEN','type' => 'numeric');
+	}*/
+	/*if($max_price != '') {
+		$max_price_array = array('key' => 'listing_max_price','value' => $max_price,'compare' => '<=','type' => 'numeric');
+	}*/
 	if ($min_size != '') {
 		$min_size_array = array('key' => 'listing_min_floor_area','value' => $min_size,'compare' => '>=','type' => 'numeric');
 	}
@@ -898,17 +897,26 @@ if ( get_query_var('paged') ) {
 	
 	$search_types = array('listing');
 	
+	if($lprice != '') {
 	
-	if($title_keyword != '') {
-		add_filter( 'posts_where', 'title_like_listing_where', 10, 2 );
-		function title_like_listing_where( $where, &$wp_query ) {
+		add_filter( 'posts_where', 'listing_value_where', 10, 2 );
+		function listing_value_where( $where, &$wp_query ) {
 			global $wpdb;
-			if ( $post_title_like = $wp_query->get( 'post_title_like' ) ) {
-				$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql( like_escape( $post_title_like ) ) . '%\'';
+			
+			if ( $listing_value = $wp_query->get( 'listing_value' ) ) {
+			
+				$price_value = explode('-', $listing_value);
+				$min_value = $price_value[0];
+				$max_value = $price_value[1];
+			
+				//$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql( like_escape( $post_title_like ) ) . '%\'';
+				//$where .= " AND ID IN (SELECT post_id FROM {$wpdb->postmeta} WHERE (meta_key='listing_min_price' || meta_key='listing_max_price') AND (meta_value >= {$min_value} AND meta_value <= {$max_value}) )";
+				$where .= " AND ID IN (SELECT post_id FROM {$wpdb->postmeta} WHERE (meta_key='listing_min_price' || meta_key='listing_max_price') AND (meta_value >= {$min_value} AND meta_value <= {$max_value}) )";
+				
 			}
 			return $where;
 		}
-		$title_filter = array('post_title_like' => $title_keyword);
+		$title_filter = array('listing_value' => $lprice);
 		$args = array(
 			'post_type' => $search_types,
 			'meta_query' => array(
@@ -916,12 +924,10 @@ if ( get_query_var('paged') ) {
 				$listing_country_array,
 				$type_array,
 				$location_array,
-				$max_price_array,
-				$min_price_array,
 				$min_size_array,
 				$max_size_array
 			),
-			'post_title_like'=> $title_keyword,
+			'listing_value'=> $lprice,
 			'paged' => $paged
 		);
 	}else {
@@ -947,10 +953,10 @@ if ( get_query_var('paged') ) {
 	
 	$searched_posts = new WP_Query( $args );
 	
-	if($title_keyword != '') {
+	if($bprice != '') {
 		remove_filter( 'posts_where', 'title_like_listing_where' );
 	}
-	
+
 	return $searched_posts;
 }
 
@@ -965,9 +971,7 @@ $type = escape_check($_GET['listing_type']);
 $location = escape_check($_GET['location']);
 $min_size = escape_check($_GET['min_size']);
 $max_size = escape_check($_GET['max_size']);
-$price = explode('-', escape_check($_GET['lprice']));
-$max_price = $price[1];
-$min_price = $price[0];
+$price = escape_check($_GET['lprice']);
 $title_keyword = escape_check(trim($_GET['listing_name']));
 
 	if ($status != '') {
@@ -982,11 +986,9 @@ $title_keyword = escape_check(trim($_GET['listing_name']));
 	if ($location != '') {
 		$location_array = array('key' => 'listing_default_location','value' => $location);
 	}
-	if($max_price != '') {
-		$max_price_array = array('key' => 'listing_max_price','value' => $max_price,'compare' => '<=','type' => 'numeric');
-	}
-	if($min_price != '') {
-		$min_price_array = array('key' => 'listing_min_price','value' => $min_price,'compare' => '>=','type' => 'numeric');
+	if($price != '') {
+		$max_price_array = array('key' => 'listing_max_price','value' => $price,'compare' => '<=','type' => 'numeric');
+		$min_price_array = array('key' => 'listing_min_price','value' => $price,'compare' => '>=','type' => 'numeric');
 	}
 	if ($min_size != '') {
 		$min_size_array = array('key' => 'listing_min_floor_area','value' => $min_size,'compare' => '>=','type' => 'numeric');
