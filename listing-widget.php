@@ -94,56 +94,13 @@ class Listing_Widget extends WP_Widget {
 				</p>
 
 				<p class="search_layer">
-					<label for="lprice">Price:</label>
-					<select name="lprice" id="lprice" class="lprice">
-						<option value="">Select Price</option>
-						<option value="4-5">S4-$5</option>
-						<option value="5-6">S5-$6</option>
-						<option value="6-7">S6-$7</option>
-						<option value="7-8">S7-$8</option>
-						<option value="8-9">S8-$9</option>
-						<option value="9-10">S9-$10</option>
-						<option value="10-11">S10-$11</option>
-						<option value="11-12">S11-$12</option>
-						<option value="12-13">S12-$13</option>
-						<option value="13-14">S13-$14</option>
-						<option value="14-15">S14-$15</option>
-					</select>
+					<label for="l_price">Price (psf):</label>
+					<input type="text" name="l_price" id="l_price" class="l_price">
 				</p>
 
 				<p class="search_layer">
-					<label for="size">Floor Size:</label>
-					<select name="min_size" id="min_size" class="min_size">
-						<option value="">Min</option>
-						<option value="500">500 sqft (46 sqm)</option>
-						<option value="750">750 sqft (70 sqm)</option>
-						<option value="1000">1000 sqft (93 sqm)</option>
-						<option value="1200">1200 sqft (112 sqm)</option>
-						<option value="1500">1500 sqft (139 sqm)</option>
-						<option value="2000">2000 sqft (186 sqm)</option>
-						<option value="2500">2500 sqft (232 sqm)</option>
-						<option value="3000">3000 sqft (279 sqm)</option>
-						<option value="4000">4000 sqft (372 sqm)</option>
-						<option value="5000">5000 sqft (465 sqm)</option>
-						<option value="7500">7500 sqft (679 sqm)</option>
-						<option value="10000">10000 sqft (929 sqm)</option>
-					</select>
-
-					<select name="max_size" id="max_size" class="search_select_size_field">
-						<option value="">Max</option>
-						<option value="500">500 sqft (46 sqm)</option>
-						<option value="750">750 sqft (70 sqm)</option>
-						<option value="1000">1000 sqft (93 sqm)</option>
-						<option value="1200">1200 sqft (112 sqm)</option>
-						<option value="1500">1500 sqft (139 sqm)</option>
-						<option value="2000">2000 sqft (186 sqm)</option>
-						<option value="2500">2500 sqft (232 sqm)</option>
-						<option value="3000">3000 sqft (279 sqm)</option>
-						<option value="4000">4000 sqft (372 sqm)</option>
-						<option value="5000">5000 sqft (465 sqm)</option>
-						<option value="7500">7500 sqft (679 sqm)</option>
-						<option value="10000">10000 sqft (929 sqm)</option>
-					</select>
+					<label for="l_floor_area">Floor Area (sqft):</label>
+					<input type="text" name="l_floor_area" id="l_floor_area" class="l_floor_area">
 				</p>
 
 				<input type="submit" class="classified_search_btn resale_search_btn" value="Search" />
