@@ -674,6 +674,11 @@ function listing_default_box_meta() {
 			<label for="listing_max_price" class="def_lbl">Max Price (psf)</label>
 			<input type="text" name="listing_max_price" id="listing_max_price" class="def_txt_box add_num_format" value="<?php if($listing_max_price[0] != '') echo number_format($listing_max_price[0]);?>" />
 		</p>
+		<p>
+			<label class="def_lbl">Rate On Application</label>
+			<input type="checkbox" name="rate_on_app" id="rate_on_app" value="show" <?php if($rate_on_app[0] == 'show') echo 'checked="checked"';?>>
+			<label for="rate_on_app">Show</label>
+		</p>
 
 		<p class="listing_floor_area_wrap">
 			<label for="listing_min_floor_area" class="def_lbl">Min Floor Area (sqft)</label>
@@ -784,6 +789,7 @@ function listing_default_box_save_meta( $post_id ) {
 		'listing_max_floor_area',
 		'listing_min_price',
 		'listing_max_price',
+		'rate_on_app',
 		'listing_default_year',
 		'listing_mrt_station',
 		'listing_bld_height',
@@ -809,6 +815,7 @@ function listing_default_box_save_meta( $post_id ) {
 		'listing_max_floor_area' => 'None',
 		'listing_min_price' => 'None',
 		'listing_max_price' => 'None',
+		'rate_on_app' => 'None',
 		'listing_default_year' => 'None',
 		'listing_mrt_station' => 'None',
 		'listing_bld_height' => 'None',
